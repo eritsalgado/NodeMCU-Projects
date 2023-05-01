@@ -22,37 +22,38 @@
 
 #include <Ticker.h>
 
+#include "rgb.h"
+
 #define WifiLed D4
 
-Ticker ticker;
+Ticker wifi_blink;
+Ticker wifi_status;
 
-void parpadeoLedWiFi(){
-  byte estado = digitalRead(WifiLed);
-  digitalWrite(WifiLed, !estado);
+void checkStatus(){
+  if (WiFi.isConnected()) {
+    custom_color(0,255,0);
+  } else {
+    custom_color(255,0,0);
+  }
 }
 
 void WifiConnect(){
-  pinMode(WifiLed, OUTPUT);
-  ticker.attach(0.2, parpadeoLedWiFi);
+  wifi_blink.attach(0.2, BlinkWifiLed);
   WiFiManager wifiManager;
 
-  wifiManager.resetSettings();
+  // Uncomment if going to production
+  // wifiManager.resetSettings();
+
+  // Will loop until get connected
   if(!wifiManager.autoConnect("Temporal_Net")){
     Serial.println("Failed to connect (TIMEOUT)");
     ESP.reset();
     delay(1000);
   }
 
-  Serial.println("Online");
-  ticker.detach();
+  // Once connected will detach the blue blink
+  wifi_blink.detach();
 
-  digitalWrite(WifiLed, HIGH);
-}
-
-void checkStatus(){
-  if (WiFi.isConnected()) {
-    Serial.println("Online");
-  } else {
-    Serial.println("Offline");
-  }
+  custom_color(0,0,0);
+  wifi_status.attach(1, checkStatus);
 }
