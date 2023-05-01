@@ -1,21 +1,24 @@
 /*
-  Este circuito tiene un led RGB y un botón, se utilizan los siguientes cables:
-  * NodeMCU -> VIN a + 
-  * NodeMCU -> GND a - 
-  * NodeMCU -> D2~ a Led Red  (con resistencia 330ohms)
-  * NodeMCU -> D5~ a Led Green(con resistencia 330ohms)
-  * NodeMCU -> D6~ a Led Blue (con resistencia 330ohms)
-  * Led RGB -> Cátodo a GND
-  * Button  -> In a NodeMCU D1
-  * Button  -> Out a GND
+  This circuit has a common catode RGB Led and a button
+  here are the wirings
+  * NodeMCU -> VIN to + 
+  * NodeMCU -> GND to - 
+  * NodeMCU -> D2~ to Led Red  (resistor 330 ohms)
+  * NodeMCU -> D5~ to Led Green(resistor 330 ohms)
+  * NodeMCU -> D6~ to Led Blue (resistor 330 ohms)
+  * Led RGB -> Cátodo to GND
+  * Button  -> In to NodeMCU D1
+  * Button  -> Out to GND
 
-  En el ciclo se controla lo siguiente:
-  * Apagado
-  * Encendido con control de colores
+  The circuit does the following
+  * On/Off status
+  * Color change status, just like christmas tree leds
 
-  Se cuenta con la funcion custom_color(R,G,B)
-  para optimizar la cantidad de código
-  toma los 3 valores del led RGB y los asigna
+  I created the function custom_color(R,G,B)
+  optimizing in less code quantity
+  
+  the function takes and assign the 3 values needed 
+  for RGB colors
 */
 
 int led_R = D2;
